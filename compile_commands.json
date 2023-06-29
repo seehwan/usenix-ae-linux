@@ -1,0 +1,14 @@
+[
+ {
+  "directory": "/Users/yooseehwan/Documents/GitHub/sosp-paper211-ae/linux",
+  "command": "gcc -Wp,-MD,scripts/kconfig/.zconf.tab.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89     -Iscripts/kconfig -c -o scripts/kconfig/zconf.tab.o scripts/kconfig/zconf.tab.c",
+  "file": "scripts/kconfig/zconf.tab.c",
+  "output": "scripts/kconfig/zconf.tab.o"
+ },
+ {
+  "directory": "/Users/yooseehwan/Documents/GitHub/sosp-paper211-ae/linux",
+  "command": "gcc -Wp,-MD,scripts/kconfig/.conf.o.d -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89      -c -o scripts/kconfig/conf.o scripts/kconfig/conf.c",
+  "file": "scripts/kconfig/conf.c",
+  "output": "scripts/kconfig/conf.o"
+ }
+]
