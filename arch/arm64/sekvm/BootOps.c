@@ -86,7 +86,7 @@ void __hyp_text register_vcpu(u32 vmid, u32 vcpuid)
 	release_lock_vm(vmid);
 }
 
-u32 __hyp_text register_kvm()
+u32 __hyp_text register_kvm(void)
 {
 	u32 vmid, state;
 	u64 kvm;

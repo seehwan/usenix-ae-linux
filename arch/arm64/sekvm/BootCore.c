@@ -5,7 +5,7 @@
  * BootCore
  */
 
-u32 __hyp_text gen_vmid()
+u32 __hyp_text gen_vmid(void)
 {
 	u32 vmid = INVALID;
 	acquire_lock_core();

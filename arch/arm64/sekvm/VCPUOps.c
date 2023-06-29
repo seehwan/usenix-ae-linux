@@ -5,7 +5,7 @@
  * VCPUOps
  */
 
-void __hyp_text save_shadow_kvm_regs()
+void __hyp_text save_shadow_kvm_regs(void)
 {
 	u64 ec, hsr, hsr_ec;
 	u32 vmid, vcpuid;
@@ -51,7 +51,7 @@ void __hyp_text save_shadow_kvm_regs()
 	}
 }
 
-void __hyp_text restore_shadow_kvm_regs()
+void __hyp_text restore_shadow_kvm_regs(void)
 {
 	u64 dirty, ec, pc, addr;
 	u32 vmid, vcpuid;
