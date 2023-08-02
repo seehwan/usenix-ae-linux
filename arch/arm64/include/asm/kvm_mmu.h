@@ -180,24 +180,28 @@ void kvm_clear_hyp_idmap(void);
 static inline pte_t kvm_s2pte_mkwrite(pte_t pte)
 {
 	pte_val(pte) |= PTE_S2_RDWR;
+	pte_val(pte) |= PTE_S2_XN;
 	return pte;
 }
 
 static inline pmd_t kvm_s2pmd_mkwrite(pmd_t pmd)
 {
 	pmd_val(pmd) |= PMD_S2_RDWR;
+	pmd_val(pmd) |= PMD_S2_XN;
 	return pmd;
 }
 
 static inline pte_t kvm_s2pte_mkexec(pte_t pte)
 {
 	pte_val(pte) &= ~PTE_S2_XN;
+	pte_val(pte) &= ~PTE_S2_RDWR;
 	return pte;
 }
 
 static inline pmd_t kvm_s2pmd_mkexec(pmd_t pmd)
 {
 	pmd_val(pmd) &= ~PMD_S2_XN;
+	pmd_val(pmd) &= ~PMD_S2_RDWR;
 	return pmd;
 }
 
