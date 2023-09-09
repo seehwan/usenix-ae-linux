@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 18
 SUBLEVEL = 0
-EXTRAVERSION = wxmem
+EXTRAVERSION = sekvm+udmabuf
 NAME = Merciless Moray
 
 # *DOCUMENTATION*
