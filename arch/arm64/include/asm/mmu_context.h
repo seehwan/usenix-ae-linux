@@ -34,6 +34,7 @@
 #include <asm/pgtable.h>
 #include <asm/sysreg.h>
 #include <asm/tlbflush.h>
+#include <asm/ptdump.h>
 
 static inline void contextidr_thread_switch(struct task_struct *next)
 {

@@ -123,6 +123,7 @@ void __hyp_text map_pfn_vm(u32 vmid, u64 addr, u64 pte, u32 level)
 	paddr = phys_page(pte);
 	/* We give the VM RWX permission now. */
 	perm = pgprot_val(PAGE_S2_KERNEL);
+	//perm = pgprot_val(PAGE_S2_XN);
 
 	if (level == 2U)
 	{

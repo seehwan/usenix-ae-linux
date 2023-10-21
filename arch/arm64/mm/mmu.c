@@ -502,8 +502,10 @@ void mark_rodata_ro(void)
 	section_size = (unsigned long)__init_begin - (unsigned long)__start_rodata;
 	update_mapping_prot(__pa_symbol(__start_rodata), (unsigned long)__start_rodata,
 			    section_size, PAGE_KERNEL_RO);
+			    //section_size, __pgprot(PROT_NORMAL & ~PTE_RDONLY | PTE_WRITE & ~PTE_PXN) );
 
 	debug_checkwx();
+	printk("debug_checkwx: passed\n");
 }
 
 static void __init map_kernel_segment(pgd_t *pgdp, void *va_start, void *va_end,
