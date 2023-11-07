@@ -1827,6 +1827,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
 
 	fault_ipa = kvm_vcpu_get_fault_ipa(vcpu);
 	is_iabt = kvm_vcpu_trap_is_iabt(vcpu);
+	vcpu->stat.handle_guest_faults++;
 
 	/* Synchronous External Abort? */
 #ifdef CONFIG_VERIFIED_KVM
@@ -1868,6 +1869,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
 	write_fault = kvm_is_write_fault(vcpu);
 	if (kvm_is_error_hva(hva) || (write_fault && !writable)) {
 		if (is_iabt) {
+			vcpu->stat.guest_iabt++;
 #ifndef CONFIG_VERIFIED_KVM
 			/* Prefetch Abort on I/O address, can this happen? */
 			kvm_inject_pabt(vcpu, kvm_vcpu_get_hfar(vcpu));

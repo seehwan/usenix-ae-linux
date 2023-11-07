@@ -384,6 +384,27 @@ static struct ptdump_info kernel_ptdump_info = {
 	.base_addr	= VA_START,
 };
 
+void ptdump_check_wx_curr(struct task_struct *p)
+{
+	struct pg_state st = {
+		.seq = NULL,
+		.marker = (struct addr_marker[]) {
+			{ 0, NULL},
+			{ -1, NULL},
+		},
+		.check_wx = true,
+	};
+	pr_devel("ptdump_checkwx_curr: %p\n", p);
+
+	walk_pgd(&st, p->mm, p->mm->start_code);
+	note_page(&st, 0, 0, 0);
+	if (st.wx_pages || st.uxn_pages)
+		pr_warn("Checked W+X mappings(p): FAILED, %lu W+X pages found, %lu non-UXN pages found\n",
+			st.wx_pages, st.uxn_pages);
+	else
+		pr_devel("Checked W+X mappings(p): passed, no W+X pages found\n");
+}
+
 void ptdump_check_wx(void)
 {
 	struct pg_state st = {

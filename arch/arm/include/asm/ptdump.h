@@ -36,6 +36,8 @@ void ptdump_check_wx(void);
 
 #ifdef CONFIG_DEBUG_WX
 #define debug_checkwx() ptdump_check_wx()
+void ptdump_check_wx_curr(struct task_struct *p);
+#define debug_checkwx() ptdump_check_wx_curr(current)
 #else
 #define debug_checkwx() do { } while (0)
 #endif
