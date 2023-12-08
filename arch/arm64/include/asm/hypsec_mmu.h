@@ -32,6 +32,7 @@ struct s2_page {
 	int count;
 	u32 vmid;
 	u64 gfn;
+	bool wx; //wxvisor
 };
 
 struct s2_memblock_info {
