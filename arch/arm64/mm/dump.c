@@ -399,10 +399,10 @@ void ptdump_check_wx_curr(struct task_struct *p)
 	walk_pgd(&st, p->mm, p->mm->start_code);
 	note_page(&st, 0, 0, 0);
 	if (st.wx_pages || st.uxn_pages)
-		pr_warn("Checked W+X mappings: FAILED, %lu W+X pages found, %lu non-UXN pages found\n",
+		pr_warn("Checked W+X mappings(p): FAILED, %lu W+X pages found, %lu non-UXN pages found\n",
 			st.wx_pages, st.uxn_pages);
 	else
-		pr_info("Checked W+X mappings: passed, no W+X pages found\n");
+		pr_devel("Checked W+X mappings(p): passed, no W+X pages found\n");
 }
 
 void ptdump_check_wx(void)
