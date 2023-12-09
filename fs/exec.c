@@ -1834,7 +1834,7 @@ static int __do_execve_file(int fd, struct filename *filename,
 		put_files_struct(displaced);
 
 	debug_checkwx_curr();
-	
+
 	return retval;
 
 out:

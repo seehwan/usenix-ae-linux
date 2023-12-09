@@ -393,6 +393,9 @@ struct kvm_vcpu_stat {
 	u64 mmio_exit_user;
 	u64 mmio_exit_kernel;
 	u64 exits;
+
+	u64 handle_guest_faults;
+	u64 guest_iabt;
 };
 
 int kvm_vcpu_preferred_target(struct kvm_vcpu_init *init);

@@ -119,3 +119,33 @@ void __hyp_text revoke_stage2_sg_gpa(u32 vmid, u64 addr, u64 size)
 		len -= 1UL;
 	}
 }
+
+u64 __hyp_text gpa_to_pfn(u32 vmid, u64 addr)
+{
+	u32 level;
+	u64 pte, pte_pa, pfn=0;
+
+	pte = walk_s2pt(vmid, addr);
+	level = 0;
+	pte_pa = phys_page(pte);
+
+	if (pte & PMD_MARK)
+	{
+		level = 2;
+	}
+	else if (pte & PTE_MARK)
+	{
+		level = 3;
+	}
+
+	if (pte_pa != 0UL)
+	{
+		pfn = pte_pa / PAGE_SIZE;
+		if (level == 2U)
+		{
+			pfn += addr / PAGE_SIZE & 511;
+		}
+	}
+	return pfn;
+}
+

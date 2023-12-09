@@ -41,6 +41,10 @@ u32 __hyp_text handle_pvops(u32 vmid, u32 vcpuid)
 		{
 			revoke_stage2_sg_gpa(vmid, addr, size);
 		}
+		else if (call_num == KVM_WX_PAGE_MAP)
+		{
+			s2_page_text_wx_map(vmid, addr);
+		}
 		else
 		{
 			ret = 0U;

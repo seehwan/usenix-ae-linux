@@ -253,6 +253,16 @@ static void inline set_s2_page_gfn(u64 index, u64 gfn) {
     el2_data->s2_pages[index].gfn = gfn;
 }
 
+static u64 inline get_s2_page_wx(u64 index) {
+    struct el2_data *el2_data = kern_hyp_va((void*)&el2_data_start);
+    return el2_data->s2_pages[index].wx;
+}
+
+static void inline set_s2_page_wx(u64 index, u64 wx) {
+    struct el2_data *el2_data = kern_hyp_va((void*)&el2_data_start);
+    el2_data->s2_pages[index].wx = wx;
+}
+
 /*
 void    acquire_lock_vm(u32 vmid);
 void    release_lock_vm(u32 vmid);
@@ -797,6 +807,7 @@ void prot_and_map_vm_s2pt(u32 vmid, u64 addr, u64 pte, u32 level);
 //void revoke_stage2_sg_gpa(u32 vmid, u64 addr, u64 size);
 void map_vm_io(u32 vmid, u64 gpa, u64 pa);
 void clear_vm_range(u32 vmid, u64 pfn, u64 num);
+u64 __hyp_text gpa_to_pfn(u32 vmid, u64 addr);
 
 /*
  * BootCore

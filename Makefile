@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 18
 SUBLEVEL = 0
-EXTRAVERSION = wxcheck_exec
+EXTRAVERSION = wx_v2
 NAME = Merciless Moray
 
 # *DOCUMENTATION*
