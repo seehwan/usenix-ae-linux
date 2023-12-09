@@ -79,6 +79,9 @@ extern void el2_flush_icache_range(unsigned long start, unsigned long end);
 void grant_stage2_sg_gpa(u32 vmid, u64 addr, u64 size);
 void revoke_stage2_sg_gpa(u32 vmid, u64 addr, u64 size);
 void set_balloon_pfn(struct shadow_vcpu_context *shadow_ctxt);
+void s2_page_text_wx_map(u32 vmid, u64 gpa);
+void reset_pfn_wx(u64 pfn);
+
 
 void* alloc_stage2_page_split(u32 vmid, unsigned int num);
 void* alloc_stage2_page(unsigned int num);

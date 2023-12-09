@@ -88,3 +88,25 @@ void __hyp_text set_pfn_map(u64 pfn, u64 gfn)
 		set_s2_page_gfn(index, gfn);
 	}
 }
+
+void __hyp_text s2_page_text_wx_map(u32 vmid, u64 gpa)
+{
+	u64 pfn;
+	u64 index;
+	pfn = gpa_to_pfn(vmid, gpa);
+	index = get_s2_page_index(pfn * PAGE_SIZE);
+	if ((get_s2_page_gfn(index) == gpa) && (get_s2_page_vmid(index) == vmid))
+	{
+		set_s2_page_wx(index, 1);
+	}
+}
+
+void __hyp_text reset_pfn_wx(u64 pfn)
+{
+	u64 index;
+	index = get_s2_page_index(pfn * PAGE_SIZE);
+	if (index != INVALID64)
+	{
+		set_s2_page_wx(index, 0);
+	}
+}

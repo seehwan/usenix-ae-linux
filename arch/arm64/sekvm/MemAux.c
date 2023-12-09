@@ -54,6 +54,7 @@ void __hyp_text clear_vm_page(u32 vmid, u64 pfn)
 		set_pfn_owner(pfn, HOSTVISOR);
 		set_pfn_count(pfn, 0U);
 		set_pfn_map(pfn, 0UL);
+		reset_pfn_wx(pfn);
 		clear_phys_page(pfn);
 		__flush_dcache_area(__el2_va(pfn << PAGE_SHIFT), PAGE_SIZE);
 	}
