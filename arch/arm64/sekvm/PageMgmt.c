@@ -93,11 +93,14 @@ void __hyp_text s2_page_text_wx_map(u32 vmid, u64 gpa)
 {
 	u64 pfn;
 	u64 index;
+	struct kvm_vcpu *v;
 	pfn = gpa_to_pfn(vmid, gpa);
 	index = get_s2_page_index(pfn * PAGE_SIZE);
-	if ((get_s2_page_gfn(index) == gpa) && (get_s2_page_vmid(index) == vmid))
+	if ((get_s2_page_gfn(index) == (gpa>>PAGE_SHIFT)) && (get_s2_page_vmid(index) == vmid))
 	{
 		set_s2_page_wx(index, 1);
+		v = (struct kvm_vcpu *)get_shared_vcpu(vmid, 0);
+		v->stat.wx_set_pages++;
 	}
 }
 
