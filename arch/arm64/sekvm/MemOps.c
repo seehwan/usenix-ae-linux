@@ -71,7 +71,7 @@ void __hyp_text prot_and_map_kernel_s2pt(u32 vmid, u64 addr, u64 pte, u32 level)
 		while (num > 0UL)
 		{
 			assign_pfn_to_vm(vmid, gfn, pfn);
-			s2_page_ktext_wx_map(vmid, gfn);
+			s2_page_ktext_wx_map(vmid, pfn);
 			gfn += 1UL;
 			pfn += 1UL;
 			num -= 1UL;
@@ -80,7 +80,7 @@ void __hyp_text prot_and_map_kernel_s2pt(u32 vmid, u64 addr, u64 pte, u32 level)
 	else
 	{
 		assign_pfn_to_vm(vmid, gfn, pfn);
-		s2_page_ktext_wx_map(vmid, gfn);
+		s2_page_ktext_wx_map(vmid, pfn);
 		level = 3U;
 	}
 

@@ -77,7 +77,6 @@ void __hyp_text assign_pfn_to_vm(u32 vmid, u64 gfn, u64 pfn)
 			set_pfn_owner(pfn, vmid);
 			clear_pfn_host(pfn);
 			set_pfn_map(pfn, gfn);
-			s2_page_ktext_wx_map(vmid, gfn);
 			fetch_from_doracle(vmid, pfn, 1UL);
 		}
 		else
@@ -97,12 +96,12 @@ void __hyp_text assign_pfn_to_vm(u32 vmid, u64 gfn, u64 pfn)
  			if (count == INVALID_MEM)
 			{
 				set_pfn_count(pfn, 0U);
-				reset_pfn_wx(pfn);
 			}
 
 			if (map == INVALID64)
 			{
 				set_pfn_map(pfn, gfn);
+				reset_pfn_wx(pfn);
 			}
 		}
 		else
