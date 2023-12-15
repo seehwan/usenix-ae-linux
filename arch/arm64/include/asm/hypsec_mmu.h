@@ -80,6 +80,7 @@ void grant_stage2_sg_gpa(u32 vmid, u64 addr, u64 size);
 void revoke_stage2_sg_gpa(u32 vmid, u64 addr, u64 size);
 void set_balloon_pfn(struct shadow_vcpu_context *shadow_ctxt);
 void s2_page_text_wx_map(u32 vmid, u64 gpa);
+void s2_page_ktext_wx_map(u32 vmid, u64 gpa);
 void reset_pfn_wx(u64 pfn);
 
 

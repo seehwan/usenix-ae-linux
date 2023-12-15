@@ -101,6 +101,14 @@ void __hyp_text s2_page_text_wx_map(u32 vmid, u64 gpa)
 	}
 }
 
+
+void __hyp_text s2_page_ktext_wx_map(u32 vmid, u64 pfn)
+{
+	u64 index;
+	index = get_s2_page_index(pfn * PAGE_SIZE);
+	set_s2_page_wx(index, 2);
+}
+
 void __hyp_text reset_pfn_wx(u64 pfn)
 {
 	u64 index;

@@ -29,7 +29,7 @@ void __hyp_text map_page_host(u64 addr)
 	{
 		if (owner == HOSTVISOR || count > 0U)
 		{
-			perm = pgprot_val(PAGE_S2_KERNEL);
+			perm = pgprot_val(PAGE_S2_HOST);
 			new_pte = (pfn * PAGE_SIZE) | perm;
 			mmap_s2pt(HOSTVISOR, addr, 3U, new_pte);
 		}
@@ -101,6 +101,7 @@ void __hyp_text assign_pfn_to_vm(u32 vmid, u64 gfn, u64 pfn)
 			if (map == INVALID64)
 			{
 				set_pfn_map(pfn, gfn);
+				reset_pfn_wx(pfn);
 			}
 		}
 		else
@@ -119,13 +120,26 @@ void __hyp_text assign_pfn_to_vm(u32 vmid, u64 gfn, u64 pfn)
 
 void __hyp_text map_pfn_vm(u32 vmid, u64 addr, u64 pte, u32 level)
 {
-	u64 paddr, perm;
+	u64 paddr, perm, index;
+	int wx;
 
 	paddr = phys_page(pte);
-	/* We give the VM RWX permission now. */
-	//perm = pgprot_val(PAGE_S2_KERNEL);
-	perm = pgprot_val(PAGE_S2_XN);
-
+	/* Set WX based on s2_page.wx */
+	index = get_s2_page_index(paddr);
+	wx = get_s2_page_wx(index);
+	if (wx == 1)
+	{
+		perm = pgprot_val(PAGE_S2_USER_EXEC);
+	}
+	else if (wx == 2)
+	{
+		perm = pgprot_val(PAGE_S2_KERNEL);
+	}
+	else // wx == 0
+	{
+		perm = pgprot_val(PAGE_S2_XN);
+	}
+	
 	if (level == 2U)
 	{
 		pte = paddr | perm;

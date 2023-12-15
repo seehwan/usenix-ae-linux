@@ -15,6 +15,44 @@ void __hyp_text clear_vm_range(u32 vmid, u64 pfn, u64 num)
 	}
 }
 
+
+void __hyp_text prot_and_map_kernel_s2pt(u32 vmid, u64 addr, u64 pte, u32 level)
+{
+	u64 pfn, gfn, num, target_addr;
+
+	target_addr = phys_page(pte);
+	pfn = target_addr / PAGE_SIZE;
+	gfn = addr / PAGE_SIZE;
+
+	if (pte == 0)
+	{
+		return;
+	}
+
+	if (level == 2U)
+	{
+		/* gfn is aligned to 2MB size */
+		gfn = gfn / PTRS_PER_PMD * PTRS_PER_PMD;
+		num = PMD_PAGE_NUM;
+		while (num > 0UL)
+		{
+			assign_pfn_to_vm(vmid, gfn, pfn);
+			s2_page_ktext_wx_map(vmid, pfn);
+			gfn += 1UL;
+			pfn += 1UL;
+			num -= 1UL;
+		}
+	}
+	else
+	{
+		assign_pfn_to_vm(vmid, gfn, pfn);
+		s2_page_ktext_wx_map(vmid, pfn);
+		level = 3U;
+	}
+
+	map_pfn_vm(vmid, addr, pte, level);
+}
+
 void __hyp_text prot_and_map_vm_s2pt(u32 vmid, u64 addr, u64 pte, u32 level)
 {
 	u64 pfn, gfn, num, target_addr;
