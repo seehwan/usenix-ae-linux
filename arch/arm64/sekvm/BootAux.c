@@ -25,7 +25,7 @@ void __hyp_text unmap_and_load_vm_image(u32 vmid, u64 target_addr, u64 remap_add
 		}
 		else
 		{
-			prot_and_map_vm_s2pt(vmid, gfn * PAGE_SIZE, pfn * PAGE_SIZE, 2U);
+			prot_and_map_kernel_s2pt(vmid, gfn * PAGE_SIZE, pfn * PAGE_SIZE, 2U);
 		}
 		start += PMD_SIZE;
 		remap_addr = remap_addr + (start - target_addr);

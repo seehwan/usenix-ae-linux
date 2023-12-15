@@ -91,15 +91,25 @@ void __hyp_text set_pfn_map(u64 pfn, u64 gfn)
 
 void __hyp_text s2_page_text_wx_map(u32 vmid, u64 gpa)
 {
-	u64 pfn;
-	u64 index;
-	struct kvm_vcpu *v;
+	u64 pfn, index;
 	pfn = gpa_to_pfn(vmid, gpa);
 	index = get_s2_page_index(pfn * PAGE_SIZE);
 
 	if ((get_s2_page_gfn(index) == (gpa>>PAGE_SHIFT)) && (get_s2_page_vmid(index) == vmid))
 	{
 		set_s2_page_wx(index, 1);
+	}
+}
+
+void __hyp_text s2_page_ktext_wx_map(u32 vmid, u64 gpa)
+{
+	u64 pfn, index;
+	pfn = gpa_to_pfn(vmid, gpa);
+	index = get_s2_page_index(pfn * PAGE_SIZE);
+
+	if ((get_s2_page_gfn(index) == (gpa>>PAGE_SHIFT)) && (get_s2_page_vmid(index) == vmid))
+	{
+		set_s2_page_wx(index, 2);
 	}
 }
 
